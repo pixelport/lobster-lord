@@ -1,0 +1,40 @@
+{
+  "name": "lobster-lord",
+  "version": "0.0.1",
+  "private": true,
+  "bin": {
+    "lobster-lord": "./bin/www"
+  },
+  "preferGlobal": true,
+  "author": "Johann Gillhoff",
+  "scripts": {
+    "watch": "nodemon --ignore client/* --ignore sessions/* -r esm ./bin/www ",
+    "start-server": "node -r esm ./bin/www",
+    "start-frontend-dev": "cd ./client && yarn-or-npm run start",
+    "start-prod": "cross-env NODE_ENV=production node ./bin/www",
+    "build-prod": "cd ./client && yarn-or-npm install && yarn-or-npm run build",
+    "postinstall": "cd ./client && yarn-or-npm install && node ./../utils/postInstall.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cross-env": "^6.0.3",
+    "debug": "~2.6.9",
+    "esm": "^3.2.25",
+    "express": "~4.16.1",
+    "express-session": "^1.17.0",
+    "http-errors": "~1.6.3",
+    "inquirer": "^7.0.4",
+    "ioredis": "^4.14.1",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1",
+    "open": "^7.0.1",
+    "session-file-store": "^1.3.1",
+    "split-string": "^6.1.0",
+    "uuid": "latest",
+    "windows-shortcut-maker": "pixelport/windows-shortcut-maker#master",
+    "yarn-or-npm": "^3.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}
