@@ -2,7 +2,7 @@
 
 LobsterLord is a Redis GUI Client. This release is still an alpha.
 
-![Screenshot LobsterLord](docs/screen.png| width=300)
+![Screenshot LobsterLord](docs/screen.png)
 
 ## Features
 
