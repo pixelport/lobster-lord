@@ -1,7 +1,6 @@
 {
   "name": "lobster-lord",
   "version": "0.0.1",
-  "private": true,
   "bin": {
     "lobster-lord": "./bin/www"
   },
@@ -13,7 +12,7 @@
     "start-frontend-dev": "cd ./client && yarn-or-npm run start",
     "start-prod": "cross-env NODE_ENV=production node ./bin/www",
     "build-prod": "cd ./client && yarn-or-npm install && yarn-or-npm run build",
-    "postinstall": "cd ./client && yarn-or-npm install && node ./../utils/postInstall.js"
+    "postinstall": "cd ./client && yarn-or-npm install && yarn-or-npm run build && node ./../utils/postInstall.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
