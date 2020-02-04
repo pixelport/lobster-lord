@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var connectionRouter = require('./routes/connection');
 var execRouter = require('./routes/exec');
 
-var config = require('./config.json')
+var config = require('./config.json');
 
 var app = express();
 
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, './client/build')));
 
 var fileStoreOptions = {
-  path: path.join(__dirname, './session')
+  path: path.join(__dirname, './sessions')
 };
 
 app.use(session({
@@ -41,7 +41,7 @@ app.use('/exec', execRouter);
 
 app.use('/key/*', function(req, res, next){
   res.sendFile(path.join(__dirname, './client/build/index.html'))
-})
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,5 +60,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-// initiales laden: redis scan

@@ -35,12 +35,12 @@ export default function TreeView({
         {keyState.keyTree.map((rootNode) => {
           const isNodeOpen = keyState.openNodes[rootNode.id + rootNode.key]
           return (
-            <>
-              <Node key={rootNode.id} dispatch={dispatch} data={rootNode} rootId={rootNode.id} connection={rootNode.connection} keyState={keyState} favKeys={favKeys} loadKeys={loadKeys} />
+            <React.Fragment key={rootNode.id}>
+              <Node dispatch={dispatch} data={rootNode} rootId={rootNode.id} connection={rootNode.connection} keyState={keyState} favKeys={favKeys} loadKeys={loadKeys} />
               {isNodeOpen && (
                 <AddKeyModal
                   dispatch={dispatch}
-                  selectedConnection={rootNode.id}
+                  selectedConnectionObj={rootNode.connection}
                   trigger={(
                     <AddNewKey>
                       <Icon name="plus circle" color="grey" />
@@ -49,7 +49,7 @@ export default function TreeView({
                   )}
                 />
               )}
-            </>
+            </React.Fragment>
           )
         })}
 

@@ -4,13 +4,6 @@ var express = require('express');
 var router = express.Router();
 const uuidv4 = require('uuid/v4');
 
-
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
 router.get('/scan/:pattern/:cursor', async function(req, res, next){
   console.log(req.params)
   const redisConn = getRedisConnection(req)
@@ -65,7 +58,6 @@ async function getKeyInfo(key, redisConn){
     key,
   }
 }
-
 
 router.post('/key/new', async function(req, res, next){
   const { key, type } = req.body
@@ -136,7 +128,6 @@ router.post('/set/key/:key', async function(req, res, next){
 });
 
 /* Lists */
-
 router.post('/lset/key/:key', async function(req, res, next){
   const { key } = req.params
   const { value, index } = req.body

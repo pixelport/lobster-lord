@@ -8,10 +8,6 @@ export default function ControlledInlineValueField({
   value, onInput, isEditing, onEnterEditingClick, onBlur, isLoading, focusOnEditChange = false, inputClass = '',
 }) {
   const inputRef = React.useRef(null)
-  /*
-  function onEnterEditingClick() {
-    setIsEditing(true)
-  } */
 
   function onInputValueChange(e) {
     onInput(e.target.value)
@@ -20,16 +16,6 @@ export default function ControlledInlineValueField({
   React.useEffect(() => {
     if (focusOnEditChange && isEditing && inputRef.current) inputRef.current.focus()
   }, [isEditing])
-
-
-  /*
-  function onBlur() {
-    setIsUpdating(true)
-    onUpdate(editedValue, () => {
-      setIsUpdating(false)
-      setIsEditing(false)
-    })
-  } */
 
   function onKeyDown(e) {
     if (e.keyCode === 13 /* Enter key */) {

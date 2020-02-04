@@ -25,7 +25,7 @@ router.post('/new', function(req, res, next) {
       name: req.body.name,
       id: newConnectionId,
       publicId: uuidv4().split('-')[0],
-      canUserAccess: true, /* indicates if user can view server and password and edit this connection */
+      canUserAccess: true, /* indicates if user can view server and password and can edit this connection */
     }
   ]
   return res.json({success: true, newConnectionId: newConnectionId, connections: getConnectionsForClient(req.session)})
@@ -43,6 +43,7 @@ router.post('/update', function(req, res, next){
     return res.json({success: true, connections: getConnectionsForClient(req.session)})
   }
 })
+
 router.post('/delete', function(req, res, next){
   const { id: connIdToDelete } = req.body
 

@@ -2,12 +2,11 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import {
-  Button, Form, Header, Image, Modal, Select,
+  Button, Form, Modal, Select,
 } from 'semantic-ui-react'
 import { defaultOptions } from '../../utils/fetchHelper'
-import SelectedConnectionContext from '../../context/SelectedConnectionContext'
 
-export default function AddKeyModal({ trigger, selectedConnection }) {
+export default function AddKeyModal({ trigger, selectedConnectionObj }) {
   const [isOpen, setIsOpen] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const [values, setValues] = React.useState({
@@ -15,7 +14,6 @@ export default function AddKeyModal({ trigger, selectedConnection }) {
     type: 'string',
   })
   const history = useHistory()
-  const selectedConnectionObj = React.useContext(SelectedConnectionContext)
 
   function handleChange(e, attrName) {
     setValues({ ...values, [attrName]: e.target.value })
@@ -37,7 +35,7 @@ export default function AddKeyModal({ trigger, selectedConnection }) {
 
   function onAddKey() {
     setIsLoading(true)
-    fetch(`/key/new?connection=${selectedConnection}`,
+    fetch(`/key/new?connection=${selectedConnectionObj.id}`,
       {
         method: 'POST',
         ...defaultOptions,
@@ -57,7 +55,6 @@ export default function AddKeyModal({ trigger, selectedConnection }) {
           setIsOpen(false)
         }
       })
-      .catch((err) => alert('error adding new key'))
       .finally(() => {
         setIsLoading(false)
       })

@@ -22,15 +22,6 @@ const getNewRootObj = (conn, name) => ({
   connection: conn,
 })
 
-function tryToUpdateCursor(node, action) {
-  if (typeof action.cursor !== 'undefined') {
-    if (node.key === action.nodeKey) {
-      node.cursor = action.cursor
-      node.fullyLoaded = action.cursor === '0'
-    }
-  }
-}
-
 function walkThroughTree(root, key) {
   let node = root
   const keySplittedArr = key.split(':')
@@ -44,8 +35,8 @@ function walkThroughTree(root, key) {
     let nextNode = node[keySplitted]
     if (!nextNode) {
       // no node there, need to create a new node object
-      const key = keySplittedArr.slice(0, i + 1).join(':')
-      node[keySplitted] = getNewNodeObj(keySplitted, key)
+      const nextNodeKey = keySplittedArr.slice(0, i + 1).join(':')
+      node[keySplitted] = getNewNodeObj(keySplitted, nextNodeKey)
       nextNode = node[keySplitted]
     }
 
@@ -58,7 +49,6 @@ function walkThroughTree(root, key) {
 
 
 export const keyStateReducer = (state, action) => {
-  console.log('keyStateReducer', action.type, state, action)
   if (action.type === 'MERGE_KEYS') {
     const { keysToAdd, rootId } = action
     const rootIndex = state.keyTree.findIndex((rootNode) => rootNode.id === rootId)
@@ -110,13 +100,6 @@ export const keyStateReducer = (state, action) => {
     }
     return newState
   }
-  /*
-    else if(action.type === 'SELECT_KEY'){
-        return {
-            ...state,
-            selectedKey: action.key,
-        }
-    } */
   if (action.type === 'TOGGLE_OPEN_NODE') {
     return {
       ...state,

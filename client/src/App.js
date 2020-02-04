@@ -1,5 +1,5 @@
 import React, {
-  useState, useReducer, useEffect, useCallback,
+  useReducer, useEffect, useCallback,
 } from 'react'
 
 import 'semantic-ui-css/semantic.min.css'
@@ -14,34 +14,15 @@ import { AppContainer, Row } from './styled'
 import { CLI } from './components/CLI'
 import { VerticalSpacer } from './elements/Spacer'
 import SelectedConnectionContext from './context/SelectedConnectionContext'
-
-/*
-if (true) {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render')
-  whyDidYouRender(React)
-}
-*/
+import { doKeyScan, getConnections } from './utils/api'
 
 const useFavouriteKeyState = createPersistedState('favKeys')
 
-const initialKeyState = []
-
-async function doKeyScan(pattern = '*', cursor = '0', connectionId = null) {
-  const res = await fetch(`/scan/${pattern}/${cursor}?connection=${connectionId}`)
-  return res.json()
-}
-
-async function getConnections() {
-  const res = await fetch('/connection/all')
-  return res.json()
-}
-
 function App() {
   const [keyState, dispatch] = useReducer(keyStateReducer, {
-    // openNodes: { '*': true, ...DEBUG_open_nodes },
     openNodes: {},
     keyMetaData: {},
-    keyTree: initialKeyState,
+    keyTree: [],
     loadedConnections: false,
   })
 
@@ -56,12 +37,6 @@ function App() {
 
 
   useEffect(() => {
-    // doKeyScan().then(data => dispatch({type: 'MERGE_KEYS', keys: data.keys}))
-    // console.log('dispatching merge_keys')
-    // loadKeys('*' /* root */, '0', () => console.log('keys for root loaded'))
-    // dispatch({type: 'MERGE_KEYS', keys: ['jobs:932:test', 'jobs:932:gggg']})
-    // dispatch({type: 'MERGE_KEYS', keys: ['jobs:444:aaaa']})
-    // dispatch({type: 'MERGE_KEYS', keys: ['newSingleKey']})
     loadConnections()
   }, [])
 
@@ -88,7 +63,8 @@ function App() {
         .then(() => dispatch({
           type: 'SET_NODE_LOADING', rootId, nodeKey, isLoading: false,
         }))
-    }, []
+    },
+    []
   )
 
   const showNoConnectionCta = keyState.loadedConnections && keyState.keyTree.length === 0

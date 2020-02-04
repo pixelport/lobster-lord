@@ -28,7 +28,7 @@ The default port is 6487 and can be set with via the `PORT` environment variable
 
 ## Development
 
-Run `npm start-frontend-dev` and `npm watch`. The React frontend is in the `/client` directory.
+Run `npm start-frontend-dev` and `npm watch`. The React frontend is in the `/client` directory. Navigate to [127.0.0.1:3000](http://127.0.0.1:3000).
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
