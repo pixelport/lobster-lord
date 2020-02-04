@@ -1,8 +1,10 @@
-# LobsterLord
+
+![Screenshot LobsterLord](docs/logo_sm.png)
+-----------------
 
 LobsterLord is a Redis GUI Client. This release is still an alpha.
 
-![Screenshot LobsterLord](docs/screen.png| width=300)
+![Screenshot LobsterLord](docs/screen.png)
 
 ## Features
 
@@ -23,6 +25,10 @@ npm install -g lobster-lord
 lobster-lord
 ```
 The default port is 6487 and can be set with via the `PORT` environment variable.
+
+## Development
+
+Run `npm start-frontend-dev` and `npm watch`. The React frontend is in the `/client` directory.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
