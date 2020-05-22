@@ -7,7 +7,7 @@ import createPersistedState from 'use-persisted-state'
 import './App.css'
 import { useParams } from 'react-router-dom'
 import TreeView from './components/TreeView'
-import { keyStateReducer } from './hooks/keyStateReducer'
+import { keyStateReducer, loadOpenNodes } from './hooks/keyStateReducer'
 import { ValueView } from './components/ValueView'
 import Menu from './components/Menu'
 import { AppContainer, Row } from './styled'
@@ -17,29 +17,20 @@ import SelectedConnectionContext from './context/SelectedConnectionContext'
 import { doKeyScan, getConnections } from './utils/api'
 
 const useFavouriteKeyState = createPersistedState('favKeys')
+const initialOpenNodes = loadOpenNodes()
 
 function App() {
   const [keyState, dispatch] = useReducer(keyStateReducer, {
-    openNodes: {},
+    openNodes: initialOpenNodes,
     keyMetaData: {},
     keyTree: [],
     loadedConnections: false,
   })
-
   const { selectedConnection: publicConnectionId } = useParams()
   const selectedRoot = keyState.keyTree.find((root) => root.connection.publicId === publicConnectionId)
   const selectedConnection = selectedRoot ? selectedRoot.connection : null
 
   const [favKeys, setFavKeys] = useFavouriteKeyState({})
-  const loadConnections = React.useCallback(() => {
-    getConnections().then((connections) => dispatch({ type: 'SET_CONNECTIONS', connections }))
-  }, [dispatch])
-
-
-  useEffect(() => {
-    loadConnections()
-  }, [])
-
 
   const loadKeys = useCallback(
     (rootId, nodeKey, cursor) => {
@@ -66,6 +57,20 @@ function App() {
     },
     []
   )
+
+  const loadConnections = React.useCallback(() => {
+    getConnections().then((connections) => {
+      dispatch({ type: 'SET_CONNECTIONS', connections })
+      if(keyState.keyTree.length === 0){
+        // initial opening
+        connections.forEach(conn => loadKeys(conn.id, '*', '0'))
+      }
+    })
+  }, [dispatch])
+
+  useEffect(() => {
+    loadConnections()
+  }, [])
 
   const showNoConnectionCta = keyState.loadedConnections && keyState.keyTree.length === 0
   return (

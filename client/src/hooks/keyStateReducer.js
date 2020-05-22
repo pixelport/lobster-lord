@@ -101,9 +101,11 @@ export const keyStateReducer = (state, action) => {
     return newState
   }
   if (action.type === 'TOGGLE_OPEN_NODE') {
+    const newOpenNodes = { ...state.openNodes, [action.rootId + action.key]: !state.openNodes[action.rootId + action.key] }
+    saveOpenNodes(newOpenNodes)
     return {
       ...state,
-      openNodes: { ...state.openNodes, [action.rootId + action.key]: !state.openNodes[action.rootId + action.key] },
+      openNodes: newOpenNodes,
     }
   }
   if (action.type === 'UPDATE_KEY_METADATA') {
@@ -132,4 +134,24 @@ export const keyStateReducer = (state, action) => {
   }
 
   throw new Error('action type not supported')
+}
+
+export const saveOpenNodes = (openNodes) => {
+  if(window.localStorage){
+    window.localStorage.setItem('openNodes', JSON.stringify(openNodes))
+  }
+}
+
+export const loadOpenNodes = () => {
+  if(window.localStorage){
+    const json = window.localStorage.getItem('openNodes')
+    if(json) {
+      try {
+        return JSON.parse(json);
+      } catch {
+        return {}
+      }
+    }
+  }
+  return {}
 }
