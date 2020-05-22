@@ -8,6 +8,9 @@ export default function StringKey({ keyInfo, selectedConnection }) {
   const [editedValue, setEditedValue] = React.useState(keyInfo.value)
   const [isUpdating, setIsUpdating] = React.useState(false)
   const [error, setError] = React.useState(null)
+
+  React.useEffect(() => setEditedValue(keyInfo.value), [keyInfo, keyInfo.value])
+
   function onSaveClick() {
     setIsUpdating(true)
     setError(null)

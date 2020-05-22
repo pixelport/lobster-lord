@@ -10,16 +10,17 @@ export default function ValueText({ value, onEnterEditingClick }) {
   const isJSON = (trimmedValue.startsWith('{') && trimmedValue.endsWith('}')) || (trimmedValue.startsWith('[') && trimmedValue.endsWith(']'))
   const linkKey = !isJSON && trimmedValue.indexOf(':') !== -1
 
+  const hrefToKey = `/key/${value}/connection/${selectedConnectionObj.publicId}`
   function onKeyLinkClick(e) {
     e.preventDefault()
-    history.push(`/key/${value}/connection/${selectedConnectionObj.publicId}`)
+    history.push(hrefToKey)
   }
 
   return (
     <ListValueTextContainer onDoubleClick={onEnterEditingClick}>
       {value}
       {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-      {linkKey && <a href={`/key/${value}`} onClick={onKeyLinkClick}><FollowKeyIcon name="share" link /></a>}
+      {linkKey && <a href={hrefToKey} onClick={onKeyLinkClick}><FollowKeyIcon name="share" link /></a>}
     </ListValueTextContainer>
   )
 }
