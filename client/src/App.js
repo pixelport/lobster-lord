@@ -55,7 +55,7 @@ function App() {
           type: 'SET_NODE_LOADING', rootId, nodeKey, isLoading: false,
         }))
     },
-    []
+    [dispatch]
   )
 
   const loadConnections = React.useCallback(() => {

@@ -12,12 +12,16 @@ export const NodeName = styled.span`
     white-space: nowrap;
 `
 
-export const InnerNodeName = styled.span`
+export const InnerNodeName = styled.a`
     white-space: nowrap;
+    color: unset;
     ${(props) => props.isKeyNode && `
         display: inline-block;
         max-width: 250px;
         overflow: hidden;
         text-overflow: ellipsis;
     `}
+    :hover {
+        color: unset;
+    }
 `

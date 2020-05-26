@@ -19,9 +19,14 @@ const Node = function Node(props) {
   const isNodeOpen = keyState.openNodes[rootId + data.key]
   const isFullyLoaded = isParentFullyLoaded || keyMetaData.cursor === '0'
 
-  function onNameClick() {
+  const keyHref = data.type === 'KEY' ? `/key/${data.key}/connection/${connection.publicId}` : null
+
+  function onNameClick(e) {
+    if(e){
+      e.preventDefault()
+    }
     if (data.type === 'KEY') {
-      history.push(`/key/${data.key}/connection/${connection.publicId}`)
+      history.push(keyHref)
       return
     }
 
@@ -63,7 +68,7 @@ const Node = function Node(props) {
   return (
     <NodeContainer key={data.id} depth={depth} isKeyNode={data.type === 'KEY'} isRootNode={data.type === 'ROOT'}>
       <NodeName>
-        <InnerNodeName onClick={onNameClick} isKeyNode={data.type === 'KEY'}>
+        <InnerNodeName onClick={onNameClick} isKeyNode={data.type === 'KEY'} href={keyHref}>
           {icon}
           {data.name}
           {data.type === 'NODE' && ':*'}
